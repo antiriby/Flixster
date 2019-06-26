@@ -7,10 +7,12 @@
 //
 
 #import "MoviesViewController.h"
+#import "MovieCell.h"
 
-@interface MoviesViewController ()
+@interface MoviesViewController () <UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *movies;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -19,7 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
@@ -37,6 +40,7 @@
             for (NSDictionary *movie in self.movies){
                 NSLog(@"%@", movie[@"title"]);
             }
+            [self.tableView reloadData];
             // TODO: Get the array of movies
             // TODO: Store the movies in a property to use elsewhere
             // TODO: Reload your table view data
@@ -44,6 +48,22 @@
     }];
     [task resume];
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.movies.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
+    
+    NSDictionary *movie = self.movies[indexPath.row];
+    cell.titleCell.text = movie[@"title"];
+    cell.synopsisLabel.text = movie[@"overview"];
+    
+    return cell;
+}
+
 
 
 /*

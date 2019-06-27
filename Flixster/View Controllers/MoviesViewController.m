@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSArray *movies;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) UIRefreshControl *loadingRefreshControl;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -27,12 +29,17 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
-    [self fetchMovies];
     
+    
+    //Refresh Control Initialization
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex: 0];
     [self.tableView addSubview:self.refreshControl];
+    
+    //Activity indicator
+    [self.activityIndicator startAnimating];
+    [self fetchMovies];
 }
 
 - (void)fetchMovies {
@@ -46,20 +53,18 @@
         else {
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
-            NSLog(@"%@", dataDictionary);
-            
             self.movies = dataDictionary[@"results"];
-            
-            for (NSDictionary *movie in self.movies){
-                NSLog(@"%@", movie[@"title"]);
-            }
+
+            [self.activityIndicator stopAnimating];
+
             [self.tableView reloadData];
             // TODO: Get the array of movies
             // TODO: Store the movies in a property to use elsewhere
             // TODO: Reload your table view data
         }
-        
+
         [self.refreshControl endRefreshing];
+
     }];
     [task resume];
 }

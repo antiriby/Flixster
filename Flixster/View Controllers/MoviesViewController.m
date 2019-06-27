@@ -30,7 +30,6 @@
     self.tableView.delegate = self;
     
     
-    
     //Refresh Control Initialization
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
@@ -49,14 +48,29 @@
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
             NSLog(@"%@", [error localizedDescription]);
+            //Alert Controller
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Network Error"
+                                                                           message:@"Unable to connect to internet."
+                                                                    preferredStyle:(UIAlertControllerStyleAlert)];
+            // OK action
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * _Nonnull action) {
+                                                                 // handle response here.
+                                                                 exit(0);
+                                                             }];
+            [alert addAction:okAction];
+            
+            [self presentViewController:alert animated:YES completion:^{
+                // optional code for what happens after the alert controller has finished presenting
+            }];
         }
         else {
-            NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
+            NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+
             self.movies = dataDictionary[@"results"];
 
             [self.activityIndicator stopAnimating];
-
             [self.tableView reloadData];
             // TODO: Get the array of movies
             // TODO: Store the movies in a property to use elsewhere

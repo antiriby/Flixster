@@ -120,7 +120,6 @@
         <!--Movies Grid View Controller-->
         <scene sceneID="Mft-oM-hPG">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Fu9-zs-2c7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="7TW-vV-XAO" customClass="MoviesGridViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jOS-fR-WFu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -130,29 +129,30 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KnT-UF-t2p">
-                                    <size key="itemSize" width="90" height="133"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="KnT-UF-t2p">
+                                    <size key="itemSize" width="114" height="170"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieCollectionCell" id="bHq-5f-hzX" customClass="MovieCollectionCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="90" height="133"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="114" height="170"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="90" height="133"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="114" height="170"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pjp-cI-LTw">
-                                                    <rect key="frame" x="0.0" y="0.0" width="90" height="128"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="114" height="170"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                         <connections>
                                             <outlet property="posterView" destination="pjp-cI-LTw" id="ygg-75-pWS"/>
+                                            <segue destination="aae-dK-ebf" kind="show" id="RVZ-r6-Ke5"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -166,6 +166,7 @@
                         <outlet property="collectionView" destination="k55-EQ-nEk" id="WWh-VT-fU7"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fu9-zs-2c7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2260" y="878.41079460269873"/>
         </scene>
@@ -239,6 +240,58 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WHQ-Jj-rjG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="233" y="27"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="F3F-pt-mXt">
+            <objects>
+                <viewController id="aae-dK-ebf" customClass="DetailsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Q1d-FV-vcr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1Y-RR-UFh">
+                                <rect key="frame" x="0.0" y="9" width="375" height="658"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8qP-fs-O2f">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="242"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6LN-tf-0w2">
+                                        <rect key="frame" x="119" y="250" width="233" height="61"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6u-dF-Kre">
+                                        <rect key="frame" x="22" y="342" width="330" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qe5-aM-xvU">
+                                        <rect key="frame" x="8" y="181" width="99" height="130"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="iMj-Il-chD"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="GIE-At-ede"/>
+                    <connections>
+                        <outlet property="backdropView" destination="8qP-fs-O2f" id="DEZ-vu-R4y"/>
+                        <outlet property="posterView" destination="Qe5-aM-xvU" id="gwP-oe-DKt"/>
+                        <outlet property="sypnopsisLabel" destination="a6u-dF-Kre" id="ZRN-nN-jkS"/>
+                        <outlet property="titleLabel" destination="6LN-tf-0w2" id="ESw-3p-vdU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k8k-YF-hbZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2260" y="1699"/>
         </scene>
     </scenes>
     <resources>

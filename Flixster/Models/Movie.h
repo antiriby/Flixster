@@ -14,8 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *synopsis;
-@property (nonatomic, strong) NSString *posterURL;
-@property (nonatomic, strong) NSString *backdropURL;
+@property (nonatomic, strong) NSURL *posterURL;
+@property (nonatomic, strong) NSURL *backdropURL;
 
 -(id)initWithDictionary:(NSDictionary *)dictionary;
 +(NSArray *)moviesWithDictionaries:(NSArray *)dictionaries;

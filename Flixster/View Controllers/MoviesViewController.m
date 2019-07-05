@@ -6,14 +6,15 @@
 //  Copyright © 2019 antiriby. All rights reserved.
 //
 
-#import "MoviesViewController.h"
+#import "Movie.h"
 #import "MovieCell.h"
+#import "MoviesViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "DetailsViewController.h"
 
 @interface MoviesViewController () <UITableViewDataSource,UITableViewDelegate, UISearchBarDelegate>
 
-@property (nonatomic, strong) NSArray *movies;
+@property (nonatomic, strong) NSMutableArray *movies;
 @property (nonatomic, strong) NSArray *filteredMovies;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -31,7 +32,7 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.searchBar.delegate = self;
-    
+    self.movies = [[NSMutableArray alloc] init];
     
     //Refresh Control Initialization
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -72,8 +73,16 @@
             
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
 
-            self.movies = dataDictionary[@"results"];
+            NSDictionary *dictionaries = dataDictionary[@"results"];
+            for (NSDictionary *dictonary in dictionaries){
+                Movie *movie = [[Movie alloc] initWithDictionary:dictonary];
+                [self.movies addObject:movie];
+            }
+
             self.filteredMovies = self.movies;
+            NSLog(@"Number of items in movies: %lu",self.movies.count);
+            NSLog(@"Number of items in filtered movies: %lu",self.filteredMovies.count);
+
 
             [self.activityIndicator stopAnimating];
             [self.tableView reloadData];
@@ -81,8 +90,6 @@
             // TODO: Store the movies in a property to use elsewhere
             // TODO: Reload your table view data
         }
-        
-        
 
         [self.refreshControl endRefreshing];
 
@@ -97,15 +104,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell" forIndexPath:indexPath];
-    
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-
-    NSDictionary *movie = self.filteredMovies[indexPath.row];
-    cell.titleCell.text = movie[@"title"];
-    cell.synopsisLabel.text = movie[@"overview"];
+    
+    Movie *movie = self.filteredMovies[indexPath.row];
+    cell.titleCell.text = movie.title;
+    cell.synopsisLabel.text = movie.synopsis;
     
     NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
-    NSString *posterURLString = movie[@"poster_path"];
+    NSString *posterURLString = movie.posterURL;
     NSString *fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
     
     NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
@@ -147,13 +153,12 @@
     
     UITableViewCell *tappedCell = sender;
     NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
-    NSDictionary *movie = self.movies[indexPath.row];
+    Movie *movie = self.movies[indexPath.row];
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     DetailsViewController *detailsViewController = [segue destinationViewController];
     detailsViewController.movie = movie;
-  
 }
 
 @end

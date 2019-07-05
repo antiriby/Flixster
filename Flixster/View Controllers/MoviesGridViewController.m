@@ -29,7 +29,7 @@
     [self fetchTopRatedMovies];
     
     //CollectionView Layout
-    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.collectionView.collectionViewLayout;
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
     layout.minimumInteritemSpacing = 5;
     layout.minimumLineSpacing = 5;
     
@@ -37,7 +37,6 @@
     CGFloat itemWidth = (self.collectionView.frame.size.width - layout.minimumInteritemSpacing *(posterPerLine - 1))/ posterPerLine;
     CGFloat itemHeight = itemWidth * 1.5;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
-    
 }
 
 //Requests Top Rated Movies from API

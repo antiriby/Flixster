@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		20C0AEF0CA0C5DA54A8A872A /* Pods_FlixsterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5EC4A579A46A8A58343DCA /* Pods_FlixsterUITests.framework */; };
 		28D292E780F6046B734950EB /* Pods_Flixster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C674D11EB5591D5FF8083916 /* Pods_Flixster.framework */; };
+		68542EAA22CDC7680032B87A /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = 68542EA922CDC7680032B87A /* Movie.m */; };
 		68F4AB6222C3EB500094C213 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F4AB6122C3EB500094C213 /* AppDelegate.m */; };
 		68F4AB6822C3EB500094C213 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68F4AB6622C3EB500094C213 /* Main.storyboard */; };
 		68F4AB6A22C3EB500094C213 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68F4AB6922C3EB500094C213 /* Assets.xcassets */; };
@@ -44,6 +45,8 @@
 /* Begin PBXFileReference section */
 		545BE6614F071253501C4694 /* Pods-FlixsterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlixsterUITests.release.xcconfig"; path = "Target Support Files/Pods-FlixsterUITests/Pods-FlixsterUITests.release.xcconfig"; sourceTree = "<group>"; };
 		641EA3193D08CC1C029EFFCC /* Pods_FlixsterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlixsterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		68542EA822CDC7680032B87A /* Movie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Movie.h; sourceTree = "<group>"; };
+		68542EA922CDC7680032B87A /* Movie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Movie.m; sourceTree = "<group>"; };
 		68F4AB5D22C3EB500094C213 /* Flixster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flixster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68F4AB6022C3EB500094C213 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		68F4AB6122C3EB500094C213 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 		68F4AB9722C3FCF60094C213 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				68542EA822CDC7680032B87A /* Movie.h */,
+				68542EA922CDC7680032B87A /* Movie.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -438,6 +443,7 @@
 			files = (
 				68F4AB7022C3EB500094C213 /* main.m in Sources */,
 				68F4ABA022C449180094C213 /* DetailsViewController.m in Sources */,
+				68542EAA22CDC7680032B87A /* Movie.m in Sources */,
 				68F4AB6222C3EB500094C213 /* AppDelegate.m in Sources */,
 				68F4ABA622C5879C0094C213 /* MovieCollectionCell.m in Sources */,
 				68F4AB9A22C4395A0094C213 /* MovieCell.m in Sources */,

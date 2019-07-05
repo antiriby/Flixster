@@ -11,6 +11,7 @@
 #import "MoviesViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "DetailsViewController.h"
+#import "MovieApiManager.h"
 
 @interface MoviesViewController () <UITableViewDataSource,UITableViewDelegate, UISearchBarDelegate>
 
@@ -45,14 +46,15 @@
     [self fetchNowPlayingMovies];
 }
 
-//Requests Top Rated Movies from API
-- (void)fetchNowPlayingMovies {
-    NSURL *nowPlayingURL = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:nowPlayingURL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+-(void)fetchNowPlayingMovies{
+    MovieApiManager *manager = [MovieApiManager new];
+    [manager fetchNowPlaying:^(NSArray *movies, NSError *error) {
         if (error != nil) {
             NSLog(@"%@", [error localizedDescription]);
+            
+            // The network request has completed, but failed.
+            // Invoke the completion block with an error.
+            // Think of invoking a block like calling a function with parameters
             //Alert Controller
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Network Error"
                                                                            message:@"Unable to connect to internet."
@@ -69,29 +71,12 @@
                 // optional code for what happens after the alert controller has finished presenting
             }];
         }
-        else {
-            
-            NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            
-            // TODO: Get the array of movies
-            NSArray *movieDictionaries = dataDictionary[@"results"];
-            // TODO: Store the movies in a property to use elsewhere
-            self.movies = [Movie moviesWithDictionaries:movieDictionaries];
-            
-            self.filteredMovies = self.movies;
-            NSLog(@"Number of items in movies: %lu",self.movies.count);
-
-
-            [self.activityIndicator stopAnimating];
-            
-            // TODO: Reload your table view data
-            [self.tableView reloadData];
-        }
-
+        self.movies = movies;
+        self.filteredMovies = self.movies;
+        [self.activityIndicator stopAnimating];
         [self.refreshControl endRefreshing];
-
+        [self.tableView reloadData];
     }];
-    [task resume];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -113,8 +98,8 @@
     
     if (searchText.length != 0) {
         
-        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(
-                                                                       id evaluatedObject, NSDictionary *bindings) {
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+            //The issue is with the following line:
             return [evaluatedObject[@"title"] containsString:searchText];
         }];
         
